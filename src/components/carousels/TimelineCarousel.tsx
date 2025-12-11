@@ -87,7 +87,7 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
       const clampedDelta = Math.max(-80, Math.min(80, delta));
       
       // Continuous scroll - no clamping, true infinite
-      const newPosition = rawPosition.get() + clampedDelta * 0.006;
+      const newPosition = rawPosition.get() + clampedDelta * 0.008;
       rawPosition.set(newPosition);
       
       // Calculate normalized index
@@ -133,7 +133,7 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
           key={displayIndex}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         >
           <h1 style={{ 
             margin: '0 0 12px', 

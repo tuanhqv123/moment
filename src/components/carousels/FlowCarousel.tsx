@@ -39,7 +39,7 @@ const FlowCarousel: React.FC<FlowCarouselProps> = ({
     const animateLoop = () => {
       const diff = targetPositionRef.current - position;
       if (Math.abs(diff) > 0.5) {
-        setPosition(prev => prev + diff * 0.08);
+        setPosition(prev => prev + diff * 0.1);
       }
       animationRef.current = requestAnimationFrame(animateLoop);
     };
@@ -191,7 +191,7 @@ const FlowCarousel: React.FC<FlowCarouselProps> = ({
           key={currentIndex}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         >
           <h1 style={{ 
             margin: '0 0 12px', 

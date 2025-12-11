@@ -44,7 +44,7 @@ const OrbitCarousel: React.FC<OrbitCarouselProps> = ({
       const diff = targetRotationRef.current - currentRotation;
       
       if (Math.abs(diff) > 0.1) {
-        currentRotation += diff * 0.06;
+        currentRotation += diff * 0.08;
         setGlobalRotation(currentRotation);
       }
       
@@ -316,7 +316,7 @@ const OrbitCarousel: React.FC<OrbitCarouselProps> = ({
           key={displayIndex}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
         >
           <h1
             style={{
