@@ -1,6 +1,3 @@
 # Memory Lane
 
-<video autoplay loop muted playsinline width="100%">
-  <source src="https://youtu.be/AR_tM3UX7yU" type="video/mp4">
-</video>
-
+https://github.com/user-attachments/assets/b7653bbf-899f-4a7b-aceb-d27a5323c1f4
