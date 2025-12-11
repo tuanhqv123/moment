@@ -1,3 +1,6 @@
-# memory-lane
-[![Memory Lane](https://img.youtube.com/vi/AR_tM3UX7yU/maxresdefault.jpg)](https://youtu.be/AR_tM3UX7yU)
+# Memory Lane
+
+<video autoplay loop muted playsinline width="100%">
+  <source src="YOUR_VIDEO_URL_HERE" type="video/mp4">
+</video>
 
