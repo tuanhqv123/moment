@@ -16,7 +16,7 @@ export interface BackgroundTheme {
 }
 
 // Theme System
-export type ThemeStyle = 'perplexity' | 'neobrutalism' | 'gradientWave' | 'parallax' | 'minimal';
+export type ThemeStyle = 'perplexity' | 'neobrutalism' | 'gradientWave' | 'parallax' | 'minimal' | 'stageLights';
 export type CarouselStyle = 'orbit' | 'timeline' | 'stack' | 'stories' | 'flow';
 export type CardStyle = 'borderless' | 'polaroid';
 
@@ -42,6 +42,9 @@ export interface ThemeConfig {
     titleColor: string;
     textColor: string;
     accentColor: string;
+    textStroke?: string;
+    textShadow?: string;
+    filter?: string;
   };
 }
 

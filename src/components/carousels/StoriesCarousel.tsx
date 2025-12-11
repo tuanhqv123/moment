@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import type { Memory, ThemeConfig } from '../../types';
+import { getNeobrutalistTextStyle } from '../../themes';
 
 interface StoriesCarouselProps {
   items: Memory[];
@@ -182,7 +183,14 @@ const StoriesCarousel: React.FC<StoriesCarouselProps> = ({
                 initial={{ y: 15, opacity: 0 }}
                 animate={{ y: 0, opacity: 0.6 }}
                 transition={{ delay: 0.2 }}
-                style={{ margin: '0 0 8px', fontSize: 12, color: '#fff', letterSpacing: '0.2em' }}
+                style={{ 
+                  margin: '0 0 8px', 
+                  fontSize: 12, 
+                  color: '#fff', 
+                  letterSpacing: '0.2em',
+                  fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+                  ...getNeobrutalistTextStyle(theme),
+                }}
               >
                 {String(currentIndex + 1).padStart(2, '0')}
               </motion.p>
@@ -193,9 +201,10 @@ const StoriesCarousel: React.FC<StoriesCarouselProps> = ({
                 style={{
                   margin: '0 0 12px',
                   fontSize: 28,
-                  fontWeight: 400,
+                  fontWeight: theme.id === 'neobrutalism' ? 900 : 400,
                   color: '#fff',
                   fontFamily: theme.typography.fontFamily,
+                  ...getNeobrutalistTextStyle(theme, true),
                 }}
               >
                 {currentItem?.title}
@@ -204,7 +213,14 @@ const StoriesCarousel: React.FC<StoriesCarouselProps> = ({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 0.7 }}
                 transition={{ delay: 0.4 }}
-                style={{ margin: '0 0 12px', fontSize: 13, color: '#fff', opacity: 0.6 }}
+                style={{ 
+                  margin: '0 0 12px', 
+                  fontSize: 13, 
+                  color: '#fff', 
+                  opacity: theme.id === 'neobrutalism' ? 1 : 0.6,
+                  fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+                  ...getNeobrutalistTextStyle(theme),
+                }}
               >
                 {currentItem && new Date(currentItem.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </motion.p>
@@ -212,7 +228,14 @@ const StoriesCarousel: React.FC<StoriesCarouselProps> = ({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 0.85 }}
                 transition={{ delay: 0.5 }}
-                style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: '#fff' }}
+                style={{ 
+                  margin: 0, 
+                  fontSize: 15, 
+                  lineHeight: 1.6, 
+                  color: '#fff',
+                  fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+                  ...getNeobrutalistTextStyle(theme),
+                }}
               >
                 {currentItem?.story}
               </motion.p>

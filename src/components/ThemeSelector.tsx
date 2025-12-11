@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Palette, Layout, Play, Clock, Image } from 'lucide-react';
 import type { ThemeStyle, CarouselStyle, CardStyle } from '../types';
-import { themes, neoBrutalismColors, gradientWavePresets, minimalVariants } from '../themes';
+import { themes, neoBrutalismColors, gradientWavePresets, stageLightsPresets, minimalVariants } from '../themes';
 import Modal from './ui/Modal';
 
 interface ThemeSelectorProps {
@@ -25,6 +25,7 @@ const themeList: { id: ThemeStyle; icon: string }[] = [
   { id: 'perplexity', icon: '🌌' },
   { id: 'neobrutalism', icon: '🎨' },
   { id: 'gradientWave', icon: '🌊' },
+  { id: 'stageLights', icon: '💡' },
   { id: 'parallax', icon: '✨' },
   { id: 'minimal', icon: '◻️' },
 ];
@@ -253,6 +254,45 @@ const ThemeSelector: React.FC<ThemeSelectorProps> = ({
                           }}
                         >
                           <span style={{ fontSize: 13, color: '#fff', fontWeight: 500 }}>
+                            {preset.name}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {currentTheme === 'stageLights' && (
+                  <div>
+                    <p style={{ margin: '0 0 12px', fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>
+                      Light Color
+                    </p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {stageLightsPresets.map((preset) => (
+                        <button
+                          key={preset.name}
+                          onClick={() => onCustomColorChange(preset.overlay)}
+                          style={{
+                            height: 48,
+                            borderRadius: 10,
+                            border: customBgColor === preset.overlay ? '2px solid #fff' : '1px solid rgba(255,255,255,0.1)',
+                            background: 'linear-gradient(180deg, #000000 0%, #1a1a1a 50%, #000000 100%)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            paddingLeft: 16,
+                            position: 'relative',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: 'absolute',
+                              inset: 0,
+                              background: preset.overlay,
+                            }}
+                          />
+                          <span style={{ fontSize: 13, color: '#fff', fontWeight: 500, position: 'relative', zIndex: 1 }}>
                             {preset.name}
                           </span>
                         </button>

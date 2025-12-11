@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import type { Memory, ThemeConfig, CardStyle } from '../../types';
+import { getNeobrutalistTextStyle } from '../../themes';
 
 interface TimelineCarouselProps {
   items: Memory[];
@@ -134,13 +135,36 @@ const TimelineCarousel: React.FC<TimelineCarouselProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 style={{ margin: '0 0 12px', fontSize: 'clamp(24px, 4vw, 40px)', fontWeight: 300, color: theme.typography.titleColor, fontFamily: theme.typography.fontFamily, textTransform: 'uppercase' }}>
+          <h1 style={{ 
+            margin: '0 0 12px', 
+            fontSize: 'clamp(24px, 4vw, 40px)', 
+            fontWeight: theme.id === 'neobrutalism' ? 900 : 300, 
+            color: theme.typography.titleColor, 
+            fontFamily: theme.typography.fontFamily, 
+            textTransform: 'uppercase',
+            ...getNeobrutalistTextStyle(theme, true)
+          }}>
             {currentItem?.title}
           </h1>
-          <p style={{ margin: '0 0 12px', fontSize: 13, color: theme.typography.textColor, opacity: 0.5 }}>
+          <p style={{ 
+            margin: '0 0 12px', 
+            fontSize: 13, 
+            color: theme.typography.textColor, 
+            opacity: theme.id === 'neobrutalism' ? 1 : 0.5,
+            fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+            ...getNeobrutalistTextStyle(theme)
+          }}>
             {currentItem && new Date(currentItem.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
-          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: theme.typography.textColor, opacity: 0.6, fontWeight: 300 }}>
+          <p style={{ 
+            margin: 0, 
+            fontSize: 14, 
+            lineHeight: 1.6, 
+            color: theme.typography.textColor, 
+            opacity: theme.id === 'neobrutalism' ? 1 : 0.6, 
+            fontWeight: theme.id === 'neobrutalism' ? 700 : 300,
+            ...getNeobrutalistTextStyle(theme)
+          }}>
             {currentItem?.story}
           </p>
         </motion.div>

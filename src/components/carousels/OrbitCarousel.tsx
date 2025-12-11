@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Memory, ThemeConfig, CardStyle } from '../../types';
+import { getNeobrutalistTextStyle } from '../../themes';
 
 interface OrbitCarouselProps {
   items: Memory[];
@@ -321,12 +322,13 @@ const OrbitCarousel: React.FC<OrbitCarouselProps> = ({
             style={{
               margin: '0 0 12px 0',
               fontSize: 'clamp(24px, 4vw, 42px)',
-              fontWeight: 300,
+              fontWeight: theme.id === 'neobrutalism' ? 900 : 300,
               color: theme.typography.titleColor,
               fontFamily: theme.typography.fontFamily,
               lineHeight: 1.15,
               textTransform: 'uppercase',
               letterSpacing: '0.02em',
+              ...getNeobrutalistTextStyle(theme, true),
             }}
           >
             {currentItem?.title}
@@ -337,7 +339,9 @@ const OrbitCarousel: React.FC<OrbitCarouselProps> = ({
               margin: '0 0 12px 0',
               fontSize: 13,
               color: theme.typography.textColor,
-              opacity: 0.5,
+              opacity: theme.id === 'neobrutalism' ? 1 : 0.5,
+              fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+              ...getNeobrutalistTextStyle(theme),
             }}
           >
             {currentItem && new Date(currentItem.date).toLocaleDateString('en-US', {
@@ -353,9 +357,10 @@ const OrbitCarousel: React.FC<OrbitCarouselProps> = ({
               fontSize: 14,
               lineHeight: 1.6,
               color: theme.typography.textColor,
-              opacity: 0.6,
+              opacity: theme.id === 'neobrutalism' ? 1 : 0.6,
               maxWidth: 380,
-              fontWeight: 300,
+              fontWeight: theme.id === 'neobrutalism' ? 700 : 300,
+              ...getNeobrutalistTextStyle(theme),
             }}
           >
             {currentItem?.story}

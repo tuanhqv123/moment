@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useCardRotation } from '../../hooks/useCardRotation';
 import type { Memory, ThemeConfig, CardStyle } from '../../types';
+import { getNeobrutalistTextStyle } from '../../themes';
 
 interface StackCarouselProps {
   items: Memory[];
@@ -70,15 +71,23 @@ const StackCarousel: React.FC<StackCarouselProps> = ({
             style={{
               margin: '0 0 12px',
               fontSize: 'clamp(24px, 4vw, 40px)',
-              fontWeight: 300,
+              fontWeight: theme.id === 'neobrutalism' ? 900 : 300,
               color: theme.typography.titleColor,
               fontFamily: theme.typography.fontFamily,
               textTransform: 'uppercase',
+              ...getNeobrutalistTextStyle(theme, true)
             }}
           >
             {topCard?.title}
           </h1>
-          <p style={{ margin: '0 0 12px', fontSize: 13, color: theme.typography.textColor, opacity: 0.5 }}>
+          <p style={{ 
+            margin: '0 0 12px', 
+            fontSize: 13, 
+            color: theme.typography.textColor, 
+            opacity: theme.id === 'neobrutalism' ? 1 : 0.5,
+            fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+            ...getNeobrutalistTextStyle(theme)
+          }}>
             {topCard &&
               new Date(topCard.date).toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -92,8 +101,9 @@ const StackCarousel: React.FC<StackCarouselProps> = ({
               fontSize: 14,
               lineHeight: 1.6,
               color: theme.typography.textColor,
-              opacity: 0.6,
-              fontWeight: 300,
+              opacity: theme.id === 'neobrutalism' ? 1 : 0.6,
+              fontWeight: theme.id === 'neobrutalism' ? 700 : 300,
+              ...getNeobrutalistTextStyle(theme)
             }}
           >
             {topCard?.story}

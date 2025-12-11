@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Settings, Plus } from 'lucide-react';
 import type { Memory, ThemeStyle, CarouselStyle, CardStyle } from '../types';
-import { getTheme } from '../themes';
+import { getTheme, getNeobrutalistTextStyle } from '../themes';
 import ThemedBackground from './backgrounds/ThemedBackground';
 import ThemeSelector from './ThemeSelector';
 import HeroTransition from './HeroTransition';
@@ -23,7 +23,7 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
 }) => {
   const [currentTheme, setCurrentTheme] = useState<ThemeStyle>(initialTheme);
   const [currentCarousel, setCurrentCarousel] = useState<CarouselStyle>(initialCarousel);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(false);
   const [autoPlayDuration, setAutoPlayDuration] = useState(6000);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
@@ -32,17 +32,27 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
 
   const baseTheme = getTheme(currentTheme);
   
-  // Adjust theme for light mode minimal
-  const theme = currentTheme === 'minimal' && customBgColor === '#ffffff'
-    ? {
-        ...baseTheme,
-        typography: {
-          ...baseTheme.typography,
-          titleColor: '#000000',
-          textColor: 'rgba(0, 0, 0, 0.8)',
-          accentColor: '#000000',
-        },
-      }
+  // Adjust theme for minimal mode based on background color
+  const theme = currentTheme === 'minimal'
+    ? (customBgColor === '#ffffff' || customBgColor === undefined)
+      ? {
+          ...baseTheme,
+          typography: {
+            ...baseTheme.typography,
+            titleColor: '#000000',
+            textColor: 'rgba(0, 0, 0, 0.8)',
+            accentColor: '#007AFF',
+          },
+        }
+      : {
+          ...baseTheme,
+          typography: {
+            ...baseTheme.typography,
+            titleColor: '#ffffff',
+            textColor: 'rgba(255, 255, 255, 0.9)',
+            accentColor: '#ffffff',
+          },
+        }
     : baseTheme;
 
   // Hero image transition state - bidirectional
@@ -105,11 +115,13 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
           style={{
             margin: 0,
             fontSize: 16,
-            fontWeight: 500,
+            fontWeight: currentTheme === 'neobrutalism' ? 900 : 500,
             color: theme.typography.titleColor,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            opacity: 0.9,
+            opacity: currentTheme === 'neobrutalism' ? 1 : 0.9,
+            fontFamily: theme.typography.fontFamily,
+            ...getNeobrutalistTextStyle(theme, true),
           }}
         >
           Memory Lane
@@ -122,9 +134,9 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
             whileTap={{ scale: 0.95 }}
             onClick={() => setShowSettings(true)}
             style={{
-              background: customBgColor === '#ffffff' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)',
+              background: (customBgColor === '#ffffff' || (currentTheme === 'minimal' && customBgColor === undefined)) ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)',
               backdropFilter: 'blur(20px)',
-              border: customBgColor === '#ffffff' ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
+              border: (customBgColor === '#ffffff' || (currentTheme === 'minimal' && customBgColor === undefined)) ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
               borderRadius: '50%',
               width: 44,
               height: 44,
@@ -145,9 +157,9 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
               whileTap={{ scale: 0.95 }}
               onClick={onAddMemory}
               style={{
-                background: customBgColor === '#ffffff' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)',
+                background: (customBgColor === '#ffffff' || (currentTheme === 'minimal' && customBgColor === undefined)) ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)',
                 backdropFilter: 'blur(20px)',
-                border: customBgColor === '#ffffff' ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
+                border: (customBgColor === '#ffffff' || (currentTheme === 'minimal' && customBgColor === undefined)) ? '1px solid rgba(0,0,0,0.1)' : '1px solid rgba(255,255,255,0.15)',
                 borderRadius: '50%',
                 width: 44,
                 height: 44,
@@ -190,7 +202,14 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
               color: theme.typography.textColor,
             }}
           >
-            <p style={{ fontSize: 16, marginBottom: 24, opacity: 0.5 }}>No memories yet</p>
+            <p style={{ 
+              fontSize: 16, 
+              marginBottom: 24, 
+              opacity: theme.id === 'neobrutalism' ? 1 : 0.5,
+              color: theme.typography.textColor,
+              fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+              ...getNeobrutalistTextStyle(theme)
+            }}>No memories yet</p>
             {onAddMemory && (
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -202,12 +221,16 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
                   gap: 8,
                   padding: '14px 28px',
                   background: theme.typography.accentColor,
-                  border: 'none',
-                  borderRadius: 28,
-                  color: '#fff',
+                  border: currentTheme === 'neobrutalism' ? '4px solid #000000' : 'none',
+                  borderRadius: currentTheme === 'neobrutalism' ? 0 : 28,
+                  boxShadow: currentTheme === 'neobrutalism' ? '6px 6px 0px #000000' : 'none',
+                  color: currentTheme === 'neobrutalism' ? '#000000' : '#fff',
                   fontSize: 15,
-                  fontWeight: 600,
+                  fontWeight: currentTheme === 'neobrutalism' ? 900 : 600,
                   cursor: 'pointer',
+                  fontFamily: currentTheme === 'neobrutalism' ? theme.typography.fontFamily : 'inherit',
+                  textShadow: currentTheme === 'neobrutalism' ? '2px 2px 0px #ffffff' : 'none',
+                  WebkitTextStroke: currentTheme === 'neobrutalism' ? '1px #ffffff' : 'none',
                 }}
               >
                 <Plus size={18} />
@@ -229,7 +252,12 @@ const StoryViewer: React.FC<StoryViewerProps> = ({
           cardStyle={cardStyle}
           onThemeChange={(t) => {
             setCurrentTheme(t);
-            setCustomBgColor(undefined);
+            // Set appropriate default background color for the theme
+            if (t === 'minimal') {
+              setCustomBgColor('#ffffff'); // Default to light mode for minimal
+            } else {
+              setCustomBgColor(undefined); // Let other themes use their default
+            }
           }}
           onCarouselChange={setCurrentCarousel}
           onAutoPlayChange={setAutoPlay}

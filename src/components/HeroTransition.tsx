@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Memory, ThemeConfig } from '../types';
+import { getNeobrutalistTextStyle } from '../themes';
 
 interface HeroTransitionProps {
   firstMemory: Memory;
@@ -183,11 +184,12 @@ const HeroTransition: React.FC<HeroTransitionProps> = ({
                 style={{
                   margin: '0 0 14px',
                   fontSize: 'clamp(22px, 4.5vw, 38px)',
-                  fontWeight: 300,
+                  fontWeight: theme.id === 'neobrutalism' ? 900 : 300,
                   color: theme.typography.titleColor,
                   fontFamily: theme.typography.fontFamily,
                   textTransform: 'uppercase',
                   letterSpacing: '0.04em',
+                  ...getNeobrutalistTextStyle(theme, true),
                 }}
               >
                 {firstMemory.title}
@@ -197,7 +199,9 @@ const HeroTransition: React.FC<HeroTransitionProps> = ({
                   margin: '0 0 10px',
                   fontSize: 13,
                   color: theme.typography.textColor,
-                  opacity: 0.5,
+                  opacity: theme.id === 'neobrutalism' ? 1 : 0.5,
+                  fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+                  ...getNeobrutalistTextStyle(theme),
                 }}
               >
                 {new Date(firstMemory.date).toLocaleDateString('en-US', {
@@ -212,7 +216,9 @@ const HeroTransition: React.FC<HeroTransitionProps> = ({
                   fontSize: 14,
                   lineHeight: 1.7,
                   color: theme.typography.textColor,
-                  opacity: 0.6,
+                  opacity: theme.id === 'neobrutalism' ? 1 : 0.6,
+                  fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+                  ...getNeobrutalistTextStyle(theme),
                 }}
               >
                 {firstMemory.story}
@@ -235,7 +241,13 @@ const HeroTransition: React.FC<HeroTransitionProps> = ({
                 color: theme.typography.textColor,
               }}
             >
-              <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+              <span style={{ 
+                fontSize: 10, 
+                letterSpacing: '0.2em', 
+                textTransform: 'uppercase',
+                fontWeight: theme.id === 'neobrutalism' ? 700 : 400,
+                ...getNeobrutalistTextStyle(theme),
+              }}>
                 Scroll to explore
               </span>
               <motion.svg 
