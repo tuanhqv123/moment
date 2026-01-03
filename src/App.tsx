@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import StoryViewer from './components/StoryViewer';
 import StoryInput from './components/StoryInput';
 import type { Memory, ThemeStyle } from './types';
@@ -101,6 +102,8 @@ function App() {
           />
         )}
       </AnimatePresence>
+
+      <Analytics />
     </div>
   );
 }
